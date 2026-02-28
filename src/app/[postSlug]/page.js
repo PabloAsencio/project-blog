@@ -6,6 +6,7 @@ import { loadBlogPost } from '@/helpers/file-helpers';
 
 import styles from './postSlug.module.css';
 import { BLOG_TITLE } from '@/constants';
+import CodeSnippet from '@/components/CodeSnippet';
 
 const loadPost = React.cache(loadBlogPost);
 
@@ -29,7 +30,9 @@ async function BlogPost({params}) {
         publishedOn={frontmatter.publishedOn}
       />
       <div className={styles.page}>
-        <MDXRemote source={content} />
+        <MDXRemote source={content} components={{
+          pre: CodeSnippet
+        }}/>
       </div>
     </article>
   );
