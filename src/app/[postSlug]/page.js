@@ -5,10 +5,23 @@ import BlogHero from '@/components/BlogHero';
 import { loadBlogPost } from '@/helpers/file-helpers';
 
 import styles from './postSlug.module.css';
+import { BLOG_TITLE } from '@/constants';
+
+const loadPost = React.cache(loadBlogPost);
+
+export async function generateMetadata({params}) {
+  const {postSlug} = await params;
+  const {frontmatter} = await loadPost(postSlug);
+
+  return {
+    title: `${frontmatter.title} - ${BLOG_TITLE}`,
+    description: frontmatter.abstract,
+  };
+}
 
 async function BlogPost({params}) {
   const {postSlug} = await params;
-  const {frontmatter, content} = await loadBlogPost(postSlug);
+  const {frontmatter, content} = await loadPost(postSlug);
   return (
     <article className={styles.wrapper}>
       <BlogHero
