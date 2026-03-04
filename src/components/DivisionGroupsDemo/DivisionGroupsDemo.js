@@ -93,8 +93,19 @@ function DivisionGroupsDemo({
             </p>
 
             {range(remainder).map((index) => {
+              const finalIndex = numOfItems - 1;
+              const constantIndex = finalIndex - index;
+              const layoutId = `${id}-${constantIndex}`;
               return (
-                <div key={index} className={styles.item} />
+                <motion.div 
+                  layoutId={layoutId}
+                  key={layoutId}
+                  transition={{
+                        type: 'spring',
+                        stiffness: 400,
+                        damping: 40,
+                      }}
+                  className={styles.item} />
               );
             })}
           </div>
